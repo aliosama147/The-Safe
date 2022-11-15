@@ -1,0 +1,235 @@
+//#include <avr/io.h>
+#include <stdio.h>
+#include "Types.h"
+#include "BIT_MATH.h"
+#include "LED_interface.h"
+#include "SWT_interface.h"
+#include "EXTI_interface.h"
+#include "LCD_interface.h"
+#include "KPD_interface.h"
+#include "LCD_private.h"
+#include "KPD_private.h"
+#include "EEPROM_interface.h"
+#include "ADC_interface.h"
+#include "ADC_private.h"
+#include "ADC_config.h"
+#include "LM35_interface.h"
+#include "LM35_private.h"
+#include "LM35_config.h"
+#include "UART_interface.h"
+#include "UART_private.h"
+#include "UART_config.h"
+#define F_CPU 8000000
+#include <util/delay.h>
+
+
+int main (void)
+{
+	
+	
+	u8 g;
+	
+	
+	USART_vidInit (9600);
+	
+	
+	LCD_vidInit4bit (GPIOA, GPIOB, PIN0, GPIOB, PIN1, HIGH_NIBBLE);
+	
+	
+	while (1)
+	
+	
+	{
+		
+		
+		
+		
+		g = USART_u8RecieveByte ();
+		
+		
+		if (g == 'w')
+		
+		
+		{
+			
+			
+			LCD_voidDisplayString4bit (GPIOA, GPIOB, PIN0, GPIOB, PIN1,HIGH_NIBBLE, "WELCOME :)");
+			
+			
+			_delay_ms (300);
+			
+			
+		}
+		
+		
+		else if (g == 'c')
+		
+		
+		{
+			
+			
+			LCD_vidClearScreen4bit (GPIOA, GPIOB, PIN0, GPIOB, PIN1,HIGH_NIBBLE);
+			
+			
+		}
+		
+		
+		else if (g == 'p')
+		
+		
+		{
+			
+			
+			LCD_voidDisplayString4bit (GPIOA, GPIOB, PIN0, GPIOB, PIN1,HIGH_NIBBLE, "Set Pass: ");
+			
+			
+		}
+		
+		
+		else if (g == 'n')
+		
+		
+		{
+			
+			
+			LCD_vidSendCmd4bit (GPIOA, GPIOB, PIN0, GPIOB, PIN1, HIGH_NIBBLE,0xC0);
+			
+			
+		}
+		
+		
+		else if (g == 'l')
+		
+		
+		{
+			
+			
+			LCD_vidSendCmd4bit (GPIOA, GPIOB, PIN0, GPIOB, PIN1, HIGH_NIBBLE,LCD_MOVE_CURSOR_LEFT);
+			
+			
+		}
+		
+		
+		else if (g == 'a')
+		
+		
+		{
+			
+			
+			LCD_vidDisplayChar4bit (GPIOA, GPIOB, PIN0, GPIOB, PIN1,HIGH_NIBBLE, '*');
+			
+			
+		}
+		
+		
+		else if (g == 'o')
+		
+		
+		{
+			
+			
+			LCD_voidDisplayString4bit (GPIOA, GPIOB, PIN0, GPIOB, PIN1,HIGH_NIBBLE, "Pass is Set");
+			
+			
+		}
+		
+		
+		else if (g == 'k')
+		
+		
+		{
+			
+			
+			g = USART_u8RecieveByte ();
+			
+			
+			LCD_vidDisplayChar4bit (GPIOA, GPIOB, PIN0, GPIOB, PIN1,HIGH_NIBBLE, g);
+			
+			
+		}
+		
+		
+		else if (g == 'e')
+		
+		
+		{
+			
+			
+			LCD_voidDisplayString4bit (GPIOA, GPIOB, PIN0, GPIOB, PIN1,HIGH_NIBBLE, "Enter Pass");
+			
+			
+		}
+		
+		
+		else if (g == 't')
+		
+		
+		{
+			
+			
+			LCD_voidDisplayString4bit (GPIOA, GPIOB, PIN0, GPIOB, PIN1,HIGH_NIBBLE, "Pass is Right :)");
+			
+			
+		}
+		
+		
+		else if (g == 'y')
+		
+		
+		{
+			
+			
+			LCD_voidDisplayString4bit (GPIOA, GPIOB, PIN0, GPIOB, PIN1,HIGH_NIBBLE, "Safe is Open :p");
+			
+			
+		}
+		
+		
+		else if (g == 'f')
+		
+		
+		{
+			
+			
+			LCD_voidDisplayString4bit (GPIOA, GPIOB, PIN0, GPIOB, PIN1,HIGH_NIBBLE, "Pass is Wrong :(");
+			
+			
+		}
+		
+		
+		else if (g == 'd')
+		
+		
+		{
+			
+			
+			LCD_voidDisplayString4bit (GPIOA, GPIOB, PIN0, GPIOB, PIN1,HIGH_NIBBLE, "Tries Left :");
+			
+			
+			g = USART_u8RecieveByte ();
+			
+			
+			LCD_vidDisplayNumber4bit (GPIOA, GPIOB, PIN0, GPIOB, PIN1,HIGH_NIBBLE, g);
+			
+			
+		}
+		
+		
+		else if (g == 'x')
+		
+		
+		{
+			
+			
+			LCD_voidDisplayString4bit (GPIOA, GPIOB, PIN0, GPIOB, PIN1,HIGH_NIBBLE, "Safe is Closed :(");
+			
+			
+		}
+		
+		
+	}
+
+	
+}
+
+
